@@ -17,10 +17,10 @@ const App = () => {
           Quiz App
         </h1>
         <p className="text-slate-500 mb-6 text-center">
-          Test your knowledge with our interactive quiz!
+          Test your knowledge on data structures and algorithms with this interactive quiz. Select the correct answer for each question and track your score.
         </p>
         {/* Quiz content will go here */}
-        <h2 className="text-lg font-bold mb-2 text-blue-800">Question</h2>
+        <h2 className="text-lg font-bold mb-2 text-blue-800">Question {index + 1} / {questions.length}</h2>
         <div className="text-xl font-medium text-slate-700 mb-6 text-center px-2">
           {questions[index].question}
         </div>
@@ -48,7 +48,7 @@ const App = () => {
             </div>
           ))}
           {score > 0 && (
-            <span className="block mt-4 text-blue-600 text-lg font-bold text-center">Score: {score}</span>
+            <span className="block mt-4 text-blue-600 text-lg font-bold text-center">Score: {score} / {questions.length}  </span>
           )}
         </div>
         <button
