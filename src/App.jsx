@@ -20,13 +20,15 @@ const App = () => {
           Test your knowledge with our interactive quiz!
         </p>
         {/* Quiz content will go here */}
-        <h2 className="text-lg font-bold">Question</h2>
-        {questions[index].question}
-        <div className="mt-4 w-full">
+        <h2 className="text-lg font-bold mb-2 text-blue-800">Question</h2>
+        <div className="text-xl font-medium text-slate-700 mb-6 text-center px-2">
+          {questions[index].question}
+        </div>
+        <div className="mt-4 w-full flex flex-col gap-2">
           {questions[index].options.map((option) => (
             <div
               key={option.id}
-              className="flex items-center mb-2 p-2 rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer"
+              className={`flex items-center mb-1 p-3 rounded-lg border transition-colors duration-200 cursor-pointer shadow-sm ${selectedOption === option.id ? (option.isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300') : 'bg-slate-50 border-slate-200 hover:bg-blue-50 hover:border-blue-200'}`}
             >
               <input
                 type="checkbox"
@@ -39,21 +41,15 @@ const App = () => {
                 }}
                 className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
               />
-              <label className="text-slate-700">{option.text}</label>
-
+              <label className="text-slate-700 text-base font-semibold select-none cursor-pointer flex-1">{option.text}</label>
               {selectedOption === option.id && (
-                <span className="ml-2 text-green-500">
-                  {option.isCorrect ? "✔️ Correct" : "❌ Incorrect"}
-                </span>
+                <span className={`ml-2 text-lg font-bold ${option.isCorrect ? 'text-green-600' : 'text-red-500'}`}>{option.isCorrect ? '✔️ Correct' : '❌ Incorrect'}</span>
               )}
-        
             </div>
           ))}
-                {score && (
-                <span className="ml-2 text-blue-500">
-                  Score: {score}
-                </span>
-              )}
+          {score > 0 && (
+            <span className="block mt-4 text-blue-600 text-lg font-bold text-center">Score: {score}</span>
+          )}
         </div>
         <button
           onClick={() => {
@@ -61,7 +57,7 @@ const App = () => {
               UpdateIndex((prev) => prev + 1);
             }
           }}
-          className="mt-8 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-colors duration-200 focus:outline-none cursor-pointer"
+          className="mt-8 px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-xl shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer text-lg"
         >
           Next
         </button>
