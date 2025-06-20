@@ -4,6 +4,8 @@ import { questions } from "./data.js";
 const App = () => {
   const [index, UpdateIndex] = React.useState(0);
   const [selectedOption, setSelectedOption] = React.useState();
+  const [score, setScore] = React.useState(0);
+
  React.useEffect(() => {
     setSelectedOption(null); // Reset selection when question changes
   }, [index]);  
@@ -29,19 +31,29 @@ const App = () => {
               <input
                 type="checkbox"
                 checked={option.id === selectedOption}
-                onChange={() => setSelectedOption(option.id)}
+                onChange={() => {
+                  setSelectedOption(option.id);
+                  if (!selectedOption && option.isCorrect) {
+                    setScore((prev) => prev + 1);
+                  }
+                }}
                 className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
               />
               <label className="text-slate-700">{option.text}</label>
 
-              // correct answer check
               {selectedOption === option.id && (
                 <span className="ml-2 text-green-500">
                   {option.isCorrect ? "✔️ Correct" : "❌ Incorrect"}
                 </span>
-              )}  
+              )}
+        
             </div>
           ))}
+                {score && (
+                <span className="ml-2 text-blue-500">
+                  Score: {score}
+                </span>
+              )}
         </div>
         <button
           onClick={() => {
