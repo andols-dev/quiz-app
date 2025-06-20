@@ -53,7 +53,7 @@ const App = () => {
         </div>
         <button
           onClick={() => {
-            if (index + 1 < questions.length) {
+            if (selectedOption &&index + 1 < questions.length) {
               UpdateIndex((prev) => prev + 1);
             }
           }}
