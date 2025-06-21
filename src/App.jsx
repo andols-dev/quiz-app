@@ -1,10 +1,25 @@
-import React from "react";
+import React, { use } from "react";
 import { questions } from "./data.js";
 
 const App = () => {
   const [index, UpdateIndex] = React.useState(0);
   const [selectedOption, setSelectedOption] = React.useState();
   const [score, setScore] = React.useState(0);
+let percentage = Math.round((score / questions.length) * 100);
+const [message, setMessage] = React.useState("");
+let correct = questions[index].options.find(o => o.isCorrect);
+// percentage = 100; For testing purposes
+React.useEffect(() => { 
+  if (percentage === 100) {
+    setMessage('You are a genius');
+  } else if (percentage >= 80) {
+    setMessage('Awesome');
+  } else if (percentage >= 50) {
+    setMessage('Keep up the good work!!');
+  } else {
+    setMessage('');
+  }
+}, [percentage]);
 
  React.useEffect(() => {
     setSelectedOption(null); // Reset selection when question changes
@@ -45,11 +60,13 @@ const App = () => {
               {selectedOption === option.id && (
                 <span className={`ml-2 text-lg font-bold ${option.isCorrect ? 'text-green-600' : 'text-red-500'}`}>{option.isCorrect ? '✔️ Correct' : '❌ Incorrect'}</span>
               )}
+
             </div>
           ))}
           {score > 0 && (
             <span className="block mt-4 text-blue-600 text-lg font-bold text-center">Score: {score} / {questions.length}  </span>
           )}
+          
         </div>
         <button
           onClick={() => {
@@ -61,7 +78,14 @@ const App = () => {
         >
           Next
         </button>
+        {message && (
+          <div className="mt-6 px-4 py-3 bg-green-100 border-l-4 border-green-400 text-green-800 rounded shadow text-center text-lg font-semibold">
+            {message}
+          </div>
+        )}
       </div>
+      <h1>correct answer {/* testing */}</h1>
+      {correct && correct.text}
     </div>
   );
 };
